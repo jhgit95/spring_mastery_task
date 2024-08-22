@@ -1,13 +1,16 @@
 package com.sparta.spring_mastery_task.entity;
 
+import com.sparta.spring_mastery_task.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "schedule")  // 테이블 이름 명시
+@NoArgsConstructor
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +24,24 @@ public class Schedule {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "content")
+    private String content;
+
     @Column(name = "reg_date")
     private String regDate;
 
     @Column(name = "mod_date")
     private String modDate;
 
-    @Column(name = "content")
-    private String content;
+    public Schedule(ScheduleRequestDto reqDto){
+        this.user=reqDto.getUser();
+        this.scheduleId =reqDto.getScheduleId();
+        this.title=reqDto.getTitle();
+        this.content=reqDto.getContent();
+        this.regDate=reqDto.getRegDate();
+        this.modDate=reqDto.getModDate();
+
+    }
+
+
 }
