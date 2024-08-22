@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class CommentService {
@@ -20,8 +22,16 @@ public class CommentService {
 
 
     // 댓글 조회 id
+    public Comment getCommentById(int id){
+        return commentRepository.findById(id).orElse(null);
+
+    }
 
     // 댓글 전체 조회
+    public List<Comment> getCommentAll(){
+        return commentRepository.findAll();
+
+    }
 
     // 댓글 수정
 
