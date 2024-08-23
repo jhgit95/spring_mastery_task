@@ -1,11 +1,14 @@
 package com.sparta.spring_mastery_task.controller;
 
+import com.sparta.spring_mastery_task.dto.SchedulePagingResponseDto;
 import com.sparta.spring_mastery_task.dto.ScheduleRequestDto;
 import com.sparta.spring_mastery_task.dto.ScheduleResponseDto;
 import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,13 +51,14 @@ public class ScheduleController {
         return ResponseEntity.ok(resDto);
     }
 
-    // 페이징
-    public void paginationSchedule(
-            @RequestParam(required = false, defaultValue = "0") Integer page,
-            @RequestParam(required = false, defaultValue = "10") Integer size
-    ) {
-
-    }
+//    // 페이징
+@GetMapping("/schedules")
+public ResponseEntity<Page<SchedulePagingResponseDto>> getAllSchedules(
+        @RequestParam(required = false, defaultValue = "0") int page,  // 기본 페이지 번호는 0
+        @RequestParam(required = false, defaultValue = "10") int size  // 기본 페이지 크기는 10
+) {
+    return  ResponseEntity.ok(scheduleService.getSchedules(page, size));
+}
 
 
 }

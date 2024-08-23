@@ -1,10 +1,15 @@
 package com.sparta.spring_mastery_task.service;
 
 
+import com.sparta.spring_mastery_task.dto.SchedulePagingResponseDto;
+import com.sparta.spring_mastery_task.dto.ScheduleResponseDto;
 import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.repository.ScheduleRepository;
 import com.sparta.spring_mastery_task.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 //@Slf4j
@@ -37,7 +42,10 @@ public class ScheduleService {
 
     // 페이징
     // 스케쥴 제목, 내용, 작성일 수정일, 작성 유저명, 댓글 수 조회
-    public void paginationSchedule(Integer page, Integer size) {
+    public Page<SchedulePagingResponseDto> getSchedules(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return scheduleRepository.findSchedulesWithDetails(pageable);
 
     }
 }
