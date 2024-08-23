@@ -1,5 +1,6 @@
 package com.sparta.spring_mastery_task.service;
 
+import com.sparta.spring_mastery_task.dto.CommentRequestDto;
 import com.sparta.spring_mastery_task.entity.Comment;
 import com.sparta.spring_mastery_task.repository.CommentRepository;
 import com.sparta.spring_mastery_task.repository.ScheduleRepository;
@@ -37,7 +38,6 @@ public class CommentService {
     // 댓글 수정
     @Transactional
     public Comment updateComment(Comment updateComment){
-        System.out.println("왜 null이야 컨텐트 서비스 : "+updateComment.getContent());
         Comment existingComment = commentRepository.findById(updateComment.getCommentId()).orElse(null);
         existingComment.setContent(updateComment.getContent());
         existingComment.setModDate("now : 나중에 바꿔야함");
@@ -46,6 +46,10 @@ public class CommentService {
     }
 
     // 댓글 삭제
+    @Transactional
+    public void deleteComment(CommentRequestDto reqDto){
+        commentRepository.deleteById(reqDto.getCommentId());
+    }
 
 
 }

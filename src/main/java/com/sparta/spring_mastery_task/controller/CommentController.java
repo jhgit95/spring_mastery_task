@@ -57,8 +57,6 @@ public class CommentController {
     // 등록일은 원래 등록일을 유지시켜야 함
     @PutMapping
     public ResponseEntity<CommentResponseDto> updateComment(@RequestBody CommentRequestDto reqDto){
-        System.out.println("왜 null이야 컨텐트 컨트롤러 : "+reqDto.getContent());
-
         Comment comment = new Comment(reqDto);
         CommentResponseDto resDto = new CommentResponseDto(commentService.updateComment(comment));
         return ResponseEntity.ok(resDto);
@@ -68,7 +66,9 @@ public class CommentController {
 
     // 댓글 삭제
     @DeleteMapping
-    public void deleteComment(@PathVariable int id, @RequestBody CommentRequestDto reqDto){
+    public ResponseEntity<String> deleteComment(@RequestBody CommentRequestDto reqDto){
+        commentService.deleteComment(reqDto);
+        return ResponseEntity.ok("삭제 완료");
 
     }
 
