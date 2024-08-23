@@ -6,6 +6,7 @@ import com.sparta.spring_mastery_task.repository.ScheduleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,15 @@ public class CommentService {
     }
 
     // 댓글 수정
+    @Transactional
+    public Comment updateComment(Comment updateComment){
+        System.out.println("왜 null이야 컨텐트 서비스 : "+updateComment.getContent());
+        Comment existingComment = commentRepository.findById(updateComment.getCommentId()).orElse(null);
+        existingComment.setContent(updateComment.getContent());
+        existingComment.setModDate("now : 나중에 바꿔야함");
+        return commentRepository.save(existingComment);
+
+    }
 
     // 댓글 삭제
 

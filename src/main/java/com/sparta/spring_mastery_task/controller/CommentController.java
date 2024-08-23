@@ -3,6 +3,7 @@ package com.sparta.spring_mastery_task.controller;
 import com.sparta.spring_mastery_task.dto.CommentRequestDto;
 import com.sparta.spring_mastery_task.dto.CommentResponseDto;
 import com.sparta.spring_mastery_task.entity.Comment;
+import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,17 +42,34 @@ public class CommentController {
         List<Comment> comments = commentService.getCommentAll();
 
         // 댓글 목록을 DTO 목록으로 변환합니다.
-        List<CommentResponseDto> resDtos = comments.stream()
+        List<CommentResponseDto> resDto = comments.stream()
                 .map(comment -> new CommentResponseDto(comment))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(resDtos);
+        return ResponseEntity.ok(resDto);
 
 
     }
 
     // 댓글 수정
+    // 댓글 내용만 수정 가능
+    // 수정일은 메서드 사용한 시간으로 서버에서 넣어주고
+    // 등록일은 원래 등록일을 유지시켜야 함
+    @PutMapping
+    public ResponseEntity<CommentResponseDto> updateComment(@RequestBody CommentRequestDto reqDto){
+        System.out.println("왜 null이야 컨텐트 컨트롤러 : "+reqDto.getContent());
+
+        Comment comment = new Comment(reqDto);
+        CommentResponseDto resDto = new CommentResponseDto(commentService.updateComment(comment));
+        return ResponseEntity.ok(resDto);
+
+    }
+
 
     // 댓글 삭제
+    @DeleteMapping
+    public void deleteComment(@PathVariable int id, @RequestBody CommentRequestDto reqDto){
+
+    }
 
 }
