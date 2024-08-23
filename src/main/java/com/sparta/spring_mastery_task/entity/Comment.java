@@ -1,7 +1,6 @@
 package com.sparta.spring_mastery_task.entity;
 
 import com.sparta.spring_mastery_task.dto.CommentRequestDto;
-import com.sparta.spring_mastery_task.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,17 +17,17 @@ public class Comment {
     @Column(name = "comment_id")
     private int commentId;
 
-    @Column(name="content")
+    @Column(name = "content")
     private String content;
 
-    @Column(name="reg_date")
+    @Column(name = "reg_date")
     private String regDate;
 
     @Column(name = "mod_date")
     String modDate;
 
     @ManyToOne
-    @JoinColumn(name="schedule_id",nullable = false)
+    @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
     @ManyToOne
@@ -36,12 +35,12 @@ public class Comment {
     private User user;
 
 
-    public Comment(CommentRequestDto reqDto){
-        this.user=reqDto.getUser();
-        this.schedule=reqDto.getSchedule();
-        this.commentId =reqDto.getCommentId();
-        this.content=reqDto.getContent();
-        this.regDate=reqDto.getRegDate();
-        this.modDate=reqDto.getModDate();
+    public Comment(CommentRequestDto reqDto) {
+        this.user = reqDto.getUser();
+        this.schedule = reqDto.getSchedule();
+        this.commentId = reqDto.getCommentId();
+        this.content = reqDto.getContent();
+        this.regDate = reqDto.getRegDate();
+        this.modDate = reqDto.getModDate();
     }
 }

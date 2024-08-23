@@ -33,13 +33,13 @@ public class Schedule {
     @Column(name = "mod_date")
     private String modDate;
 
-    public Schedule(ScheduleRequestDto reqDto){
-        this.user=reqDto.getUser();
-        this.scheduleId =reqDto.getScheduleId();
-        this.title=reqDto.getTitle();
-        this.content=reqDto.getContent();
-        this.regDate=reqDto.getRegDate();
-        this.modDate=reqDto.getModDate();
+    public Schedule(ScheduleRequestDto reqDto) {
+        this.user = reqDto.getUser();
+        this.scheduleId = reqDto.getScheduleId();
+        this.title = reqDto.getTitle();
+        this.content = reqDto.getContent();
+        this.regDate = reqDto.getRegDate();
+        this.modDate = reqDto.getModDate();
 
     }
 

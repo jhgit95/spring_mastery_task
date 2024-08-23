@@ -20,8 +20,6 @@ public class ScheduleController {
     // 일정 저장
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto reqDto) {
-
-
         Schedule schedule = new Schedule(reqDto);
 
         ScheduleResponseDto resDto = new ScheduleResponseDto(scheduleService.saveSchedule(schedule));
@@ -49,4 +47,14 @@ public class ScheduleController {
 //        return resDto != null ? ResponseEntity.ok(schedule) : ResponseEntity.notFound().build();
         return ResponseEntity.ok(resDto);
     }
+
+    // 페이징
+    public void paginationSchedule(
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer size
+    ) {
+
+    }
+
+
 }

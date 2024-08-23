@@ -2,7 +2,6 @@ package com.sparta.spring_mastery_task.service;
 
 import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

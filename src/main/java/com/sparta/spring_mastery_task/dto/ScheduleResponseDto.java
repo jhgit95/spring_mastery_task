@@ -19,16 +19,14 @@ public class ScheduleResponseDto {
     private int userId;
 
 
-    public ScheduleResponseDto(Schedule schedule){
-        this.scheduleId =schedule.getScheduleId();
-        this.title=schedule.getTitle();
-        this.content=schedule.getContent();
-        this.regDate=schedule.getRegDate();
-        this.modDate=schedule.getModDate();
-        this.userId=schedule.getUser().getUserId();
+    public ScheduleResponseDto(Schedule schedule) {
+        this.scheduleId = schedule.getScheduleId();
+        this.title = schedule.getTitle();
+        this.content = schedule.getContent();
+        this.regDate = schedule.getRegDate();
+        this.modDate = schedule.getModDate();
+        this.userId = schedule.getUser().getUserId();
     }
-
-
 
 
 }

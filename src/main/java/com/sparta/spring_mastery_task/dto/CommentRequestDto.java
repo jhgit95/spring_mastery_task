@@ -1,6 +1,5 @@
 package com.sparta.spring_mastery_task.dto;
 
-import com.sparta.spring_mastery_task.entity.Comment;
 import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.entity.User;
 import lombok.Getter;
