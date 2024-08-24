@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -20,6 +23,10 @@ public class Schedule {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)  // 외래키 컬럼 설정
     private User user;
+
+    @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comment = new ArrayList<>();
+
 
     @Column(name = "title")
     private String title;

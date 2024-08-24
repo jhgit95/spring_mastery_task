@@ -60,5 +60,12 @@ public ResponseEntity<Page<SchedulePagingResponseDto>> getAllSchedules(
     return  ResponseEntity.ok(scheduleService.getSchedules(page, size));
 }
 
+@DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSchedule(@PathVariable int id){
+        scheduleService.deleteSchedule(id);
+        return ResponseEntity.ok("삭제 완료");
+}
+
+
 
 }

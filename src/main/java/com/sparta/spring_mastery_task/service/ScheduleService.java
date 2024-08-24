@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 //@Slf4j
 @Service
@@ -46,6 +47,17 @@ public class ScheduleService {
         Pageable pageable = PageRequest.of(page, size);
 
         return scheduleRepository.findSchedulesWithDetails(pageable);
+//        SchedulePagingResponseDto pagingResponseDto = new SchedulePagingResponseDto();
+//        return scheduleRepository.findAll(pageable);
 
+
+    }
+
+    @Transactional
+    public void deleteSchedule(int id){
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 스케줄이 존재하지 않습니다. ID: " + id));
+
+        scheduleRepository.delete(schedule);
     }
 }
