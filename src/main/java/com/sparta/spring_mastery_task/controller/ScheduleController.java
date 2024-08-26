@@ -7,6 +7,7 @@ import com.sparta.spring_mastery_task.dto.ScheduleResponseDto;
 import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoRequest;
 import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoResponse;
 import com.sparta.spring_mastery_task.dto.ScheduleUpdateDto.ScheduleUpdateDtoResponse;
+import com.sparta.spring_mastery_task.dto.scheduleGetAllDto.ScheduleGetAllDtoResponse;
 import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.service.ScheduleService;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -58,22 +60,28 @@ public class ScheduleController {
         return ResponseEntity.ok(resDto);
     }
 
-//    // 페이징
-@GetMapping("/schedules")
-public ResponseEntity<Page<SchedulePagingResponseDto>> getAllSchedules(
-        @RequestParam(required = false, defaultValue = "0") int page,  // 기본 페이지 번호는 0
-        @RequestParam(required = false, defaultValue = "10") int size  // 기본 페이지 크기는 10
-) {
-    return  ResponseEntity.ok(scheduleService.getSchedules(page, size));
-}
+    //    // 페이징
+    @GetMapping("/schedules")
+    public ResponseEntity<Page<SchedulePagingResponseDto>> getAllSchedules(
+            @RequestParam(required = false, defaultValue = "0") int page,  // 기본 페이지 번호는 0
+            @RequestParam(required = false, defaultValue = "10") int size  // 기본 페이지 크기는 10
+    ) {
+        return ResponseEntity.ok(scheduleService.getSchedules(page, size));
+    }
 
     // 일정 삭제
-@DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSchedule(@PathVariable int id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSchedule(@PathVariable int id) {
         scheduleService.deleteSchedule(id);
         return ResponseEntity.ok("삭제 완료");
-}
+    }
 
+    // 그냥 dto에 담아서 보낸 것 같은데, 이게 지연 로딩이 된 건가?
+    @GetMapping("/all")
+    public ResponseEntity<List<ScheduleGetAllDtoResponse>> getAllSchedule() {
+        return ResponseEntity.ok(scheduleService.getAllSchedule());
+
+    }
 
 
 }

@@ -7,6 +7,7 @@ import com.sparta.spring_mastery_task.dto.SchedulePagingResponseDto;
 import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoRequest;
 import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoResponse;
 import com.sparta.spring_mastery_task.dto.ScheduleUpdateDto.ScheduleUpdateDtoResponse;
+import com.sparta.spring_mastery_task.dto.scheduleGetAllDto.ScheduleGetAllDtoResponse;
 import com.sparta.spring_mastery_task.entity.Assignee;
 import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.repository.AssigneeRepository;
@@ -61,10 +62,13 @@ public class ScheduleService {
                 .map(assignee -> {
                     AssigneeDto dto = new AssigneeDto();
                     dto.setUserId(assignee.getUser().getUserId());
+                    dto.setAssigneeId(assignee.getAssigneeId());
+                    dto.setUserName(assignee.getUser().getUserName());
+                    dto.setUserEmail(assignee.getUser().getEmail());
                     return dto;
                 })
                 .collect(Collectors.toList());
-
+// 여기부터 다시 해
 
         resDto.setAssignees(assigneeDtos);
 
@@ -119,5 +123,26 @@ public class ScheduleService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 스케줄이 존재하지 않습니다. ID: " + id));
 
         scheduleRepository.delete(schedule);
+    }
+
+    public List<ScheduleGetAllDtoResponse> getAllSchedule(){
+
+        List<Schedule> scheduleList = scheduleRepository.findAll();
+
+        // List<schedule> -> List<Dto>
+        List<ScheduleGetAllDtoResponse> scheduleDtoList = scheduleList.stream()
+                .map(schedule -> {
+                    ScheduleGetAllDtoResponse dto = new ScheduleGetAllDtoResponse();
+                    dto.setScheduleId(schedule.getScheduleId());
+                    dto.setModDate(schedule.getModDate());
+                    dto.setContent(schedule.getContent());
+                    dto.setRegDate(schedule.getRegDate());
+                    dto.setTitle(schedule.getTitle());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+
+        return scheduleDtoList;
     }
 }

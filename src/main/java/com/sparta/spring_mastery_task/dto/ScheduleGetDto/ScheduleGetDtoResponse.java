@@ -18,7 +18,9 @@ public class ScheduleGetDtoResponse {
     private String regDate;
     private String modDate;
 
-    private int userId;
+//    private int userId;
+//    private String userName;
+//    private String userEmail;
 
 //    private List<Assignee> assignees;
 

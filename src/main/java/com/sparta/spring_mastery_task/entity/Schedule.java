@@ -21,14 +21,15 @@ public class Schedule {
     @Column(name = "schedule_id")  // 컬럼 이름 명시
     private int scheduleId;
 
+
 //    @ManyToOne
 //    @JoinColumn(name = "user_id", nullable = false)  // 외래키 컬럼 설정
 //    private User user;
 
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Assignee> assignee = new ArrayList<>();
 
-    @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comment = new ArrayList<>();
 
 

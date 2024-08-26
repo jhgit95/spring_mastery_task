@@ -12,6 +12,7 @@ public class AssigneeDto {
     private int userId;
     private int assigneeId;
     private String userName;
+    private String userEmail;
 
     public AssigneeDto(Assignee assignee) {
         this.assigneeId = assignee.getAssigneeId();
