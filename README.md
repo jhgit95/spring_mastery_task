@@ -2,4 +2,4 @@
 스프링 숙련 과제
 
 
-![mastery_spring](https://github.com/user-attachments/assets/aa17745b-2a32-4da4-80ab-07d6b5fa2f38)
+![erd담당자추가](https://github.com/user-attachments/assets/85e845e1-8ea4-4558-912f-c58ab2f29511)
