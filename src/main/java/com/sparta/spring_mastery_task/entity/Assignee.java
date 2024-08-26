@@ -1,12 +1,15 @@
 package com.sparta.spring_mastery_task.entity;
 
+import com.sparta.spring_mastery_task.dto.assgineeCreateDto.AssigneeCreateDtoRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "assignee")
 public class Assignee {
     @Id
@@ -22,7 +25,13 @@ public class Assignee {
     @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
-    @Column(name = "writer_id")
-    private int writerId;
+
+
+    public Assignee(AssigneeCreateDtoRequest reqDto){
+        this.user=reqDto.getUser();
+        this.schedule=reqDto.getSchedule();
+
+    }
+
 
 }

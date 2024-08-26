@@ -36,7 +36,7 @@ public class ScheduleService {
         Assignee assignee = new Assignee();
         assignee.setSchedule(newSchedule);
         assignee.setUser(reqDto.getUser());
-        assignee.setWriterId(reqDto.getWriterId());
+//        assignee.setWriterId(reqDto.getWriterId());
         assigneeRepository.save(assignee);
 
         ScheduleSaveDtoResponse resDto = new ScheduleSaveDtoResponse(assignee);

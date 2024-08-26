@@ -25,6 +25,8 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     // 일정 저장
+    // dto 수정 필요
+    // 담당자 스케쥴 유저 객체 -> id만 받기
     @PostMapping
     public ResponseEntity<ScheduleSaveDtoResponse> createSchedule(@RequestBody ScheduleSaveDtoRequest reqDto) {
 
