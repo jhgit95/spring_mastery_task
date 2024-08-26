@@ -58,14 +58,14 @@ public class ScheduleController {
         return ResponseEntity.ok(resDto);
     }
 
-////    // 페이징
-//@GetMapping("/schedules")
-//public ResponseEntity<Page<SchedulePagingResponseDto>> getAllSchedules(
-//        @RequestParam(required = false, defaultValue = "0") int page,  // 기본 페이지 번호는 0
-//        @RequestParam(required = false, defaultValue = "10") int size  // 기본 페이지 크기는 10
-//) {
-//    return  ResponseEntity.ok(scheduleService.getSchedules(page, size));
-//}
+//    // 페이징
+@GetMapping("/schedules")
+public ResponseEntity<Page<SchedulePagingResponseDto>> getAllSchedules(
+        @RequestParam(required = false, defaultValue = "0") int page,  // 기본 페이지 번호는 0
+        @RequestParam(required = false, defaultValue = "10") int size  // 기본 페이지 크기는 10
+) {
+    return  ResponseEntity.ok(scheduleService.getSchedules(page, size));
+}
 
     // 일정 삭제
 @DeleteMapping("/{id}")

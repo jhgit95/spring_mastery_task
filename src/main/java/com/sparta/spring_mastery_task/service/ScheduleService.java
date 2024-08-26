@@ -3,6 +3,7 @@ package com.sparta.spring_mastery_task.service;
 
 import com.sparta.spring_mastery_task.dto.AssigneeDto;
 import com.sparta.spring_mastery_task.dto.ScheduleGetDto.ScheduleGetDtoResponse;
+import com.sparta.spring_mastery_task.dto.SchedulePagingResponseDto;
 import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoRequest;
 import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoResponse;
 import com.sparta.spring_mastery_task.dto.ScheduleUpdateDto.ScheduleUpdateDtoResponse;
@@ -12,6 +13,9 @@ import com.sparta.spring_mastery_task.repository.AssigneeRepository;
 import com.sparta.spring_mastery_task.repository.ScheduleRepository;
 import com.sparta.spring_mastery_task.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,17 +91,27 @@ public class ScheduleService {
         return null; // 또는 예외를 던질 수 있습니다.
     }
 
-//    // 페이징
-//    // 스케쥴 제목, 내용, 작성일 수정일, 작성 유저명, 댓글 수 조회
-//    public Page<SchedulePagingResponseDto> getSchedules(int page, int size) {
+    // 페이징
+    // 스케쥴 제목, 내용, 작성일 수정일, 작성 유저명, 댓글 수 조회
+    public Page<SchedulePagingResponseDto> getSchedules(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+//        Page<Schedule> pageSchedule = scheduleRepository.findAll(pageable);
+//        pageSchedule.map(SchedulePagingResponseDto::)
+//        SchedulePagingResponseDto pagingResponseDto = new SchedulePagingResponseDto();
+//        return scheduleRepository.findAll(pageable);
+
 //        Pageable pageable = PageRequest.of(page, size);
-//
-//        return scheduleRepository.findSchedulesWithDetails(pageable);
-////        SchedulePagingResponseDto pagingResponseDto = new SchedulePagingResponseDto();
-////        return scheduleRepository.findAll(pageable);
-//
-//
-//    }
+        Page<Schedule> pageSchedule = scheduleRepository.findAll(pageable);
+
+        // Schedule을 SchedulePagingResponseDto로 변환
+        Page<SchedulePagingResponseDto> dtoPage = pageSchedule.map(schedule -> new SchedulePagingResponseDto(schedule));
+
+        return dtoPage;
+
+
+
+    }
 
     @Transactional
     public void deleteSchedule(int id){
