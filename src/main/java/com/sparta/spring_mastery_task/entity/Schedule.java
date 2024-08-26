@@ -1,6 +1,7 @@
 package com.sparta.spring_mastery_task.entity;
 
 import com.sparta.spring_mastery_task.dto.ScheduleRequestDto;
+import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,12 @@ public class Schedule {
     @Column(name = "schedule_id")  // 컬럼 이름 명시
     private int scheduleId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)  // 외래키 컬럼 설정
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)  // 외래키 컬럼 설정
+//    private User user;
+
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Assignee> assignee = new ArrayList<>();
 
     @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comment = new ArrayList<>();
@@ -41,7 +45,7 @@ public class Schedule {
     private String modDate;
 
     public Schedule(ScheduleRequestDto reqDto) {
-        this.user = reqDto.getUser();
+//        this.user = reqDto.getUser();
         this.scheduleId = reqDto.getScheduleId();
         this.title = reqDto.getTitle();
         this.content = reqDto.getContent();
@@ -49,6 +53,17 @@ public class Schedule {
         this.modDate = reqDto.getModDate();
 
     }
+    public Schedule(ScheduleSaveDtoRequest reqDto) {
+//        this.user = reqDto.getUser();
+        this.scheduleId = reqDto.getScheduleId();
+        this.title = reqDto.getTitle();
+        this.content = reqDto.getContent();
+        this.regDate = reqDto.getRegDate();
+        this.modDate = reqDto.getModDate();
+
+    }
+
+
 
 
 

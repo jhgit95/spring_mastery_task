@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
+    void deleteByUser_UserId(int userId);
 }

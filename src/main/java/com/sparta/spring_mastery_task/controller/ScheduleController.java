@@ -1,8 +1,12 @@
 package com.sparta.spring_mastery_task.controller;
 
+import com.sparta.spring_mastery_task.dto.ScheduleGetDto.ScheduleGetDtoResponse;
 import com.sparta.spring_mastery_task.dto.SchedulePagingResponseDto;
 import com.sparta.spring_mastery_task.dto.ScheduleRequestDto;
 import com.sparta.spring_mastery_task.dto.ScheduleResponseDto;
+import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoRequest;
+import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoResponse;
+import com.sparta.spring_mastery_task.dto.ScheduleUpdateDto.ScheduleUpdateDtoResponse;
 import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.service.ScheduleService;
@@ -22,19 +26,19 @@ public class ScheduleController {
 
     // 일정 저장
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto reqDto) {
-        Schedule schedule = new Schedule(reqDto);
+    public ResponseEntity<ScheduleSaveDtoResponse> createSchedule(@RequestBody ScheduleSaveDtoRequest reqDto) {
 
-        ScheduleResponseDto resDto = new ScheduleResponseDto(scheduleService.saveSchedule(schedule));
+
+        ScheduleSaveDtoResponse resDto = scheduleService.saveSchedule(reqDto);
 
         return ResponseEntity.ok(resDto);
     }
 
     // 단건 조회
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> getSchedule(@PathVariable int id) {
-        Schedule schedule = scheduleService.getScheduleById(id);
-        ScheduleResponseDto resDto = new ScheduleResponseDto(schedule);
+    public ResponseEntity<ScheduleGetDtoResponse> getSchedule(@PathVariable int id) {
+        ScheduleGetDtoResponse resDto = scheduleService.getScheduleById(id);
+
 //        return schedule.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         return ResponseEntity.ok(resDto);
         // 예외처리 필요
@@ -43,23 +47,25 @@ public class ScheduleController {
 
     // 일정 수정
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable int id, @RequestBody ScheduleRequestDto reqDto) {
+    public ResponseEntity<ScheduleUpdateDtoResponse> updateSchedule(@PathVariable int id, @RequestBody ScheduleRequestDto reqDto) {
         reqDto.setScheduleId(id);
         Schedule schedule = new Schedule(reqDto);
-        ScheduleResponseDto resDto = new ScheduleResponseDto(scheduleService.updateSchedule(id, schedule));
+        ScheduleUpdateDtoResponse resDto;
+        resDto = scheduleService.updateSchedule(id, schedule);
 //        return resDto != null ? ResponseEntity.ok(schedule) : ResponseEntity.notFound().build();
         return ResponseEntity.ok(resDto);
     }
 
-//    // 페이징
-@GetMapping("/schedules")
-public ResponseEntity<Page<SchedulePagingResponseDto>> getAllSchedules(
-        @RequestParam(required = false, defaultValue = "0") int page,  // 기본 페이지 번호는 0
-        @RequestParam(required = false, defaultValue = "10") int size  // 기본 페이지 크기는 10
-) {
-    return  ResponseEntity.ok(scheduleService.getSchedules(page, size));
-}
+////    // 페이징
+//@GetMapping("/schedules")
+//public ResponseEntity<Page<SchedulePagingResponseDto>> getAllSchedules(
+//        @RequestParam(required = false, defaultValue = "0") int page,  // 기본 페이지 번호는 0
+//        @RequestParam(required = false, defaultValue = "10") int size  // 기본 페이지 크기는 10
+//) {
+//    return  ResponseEntity.ok(scheduleService.getSchedules(page, size));
+//}
 
+    // 일정 삭제
 @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSchedule(@PathVariable int id){
         scheduleService.deleteSchedule(id);

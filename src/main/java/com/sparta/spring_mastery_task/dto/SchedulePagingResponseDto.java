@@ -27,7 +27,7 @@ public class SchedulePagingResponseDto {
         this.content = schedule.getContent();
         this.regDate = schedule.getRegDate();
         this.modDate = schedule.getModDate();
-        this.userId = schedule.getUser().getUserId();
+//        this.userId = schedule.getUser().getUserId();
     }
     // 추가적인 기본 생성자와 getter, setter 필요시 정의
     public SchedulePagingResponseDto(int scheduleId, String title, String content, String regDate, String modDate, String userName,int userId, long commentCount) {

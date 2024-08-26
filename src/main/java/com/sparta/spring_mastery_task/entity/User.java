@@ -31,5 +31,5 @@ public class User {
     private String modDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Schedule> schedules = new ArrayList<>();
+    private List<Assignee> assignee = new ArrayList<>();
 }
