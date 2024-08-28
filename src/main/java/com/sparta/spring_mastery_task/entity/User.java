@@ -30,6 +30,9 @@ public class User {
     @Column(name = "mod_date")
     private String modDate;
 
+    @Column(name="pw")
+    private String pw;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Assignee> assignee = new ArrayList<>();
 }
