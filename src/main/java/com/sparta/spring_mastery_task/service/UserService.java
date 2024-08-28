@@ -1,6 +1,7 @@
 package com.sparta.spring_mastery_task.service;
 
 import com.sparta.spring_mastery_task.config.PasswordEncoder;
+import com.sparta.spring_mastery_task.dto.loginDto.LoginDtoRequest;
 import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.repository.CommentRepository;
@@ -56,5 +57,21 @@ public class UserService {
     public void deleteUser(int id) {
         commentRepository.deleteByUser_UserId(id);
         userRepository.deleteById(id);
+    }
+
+    // 로그인
+    @Transactional
+    public boolean login(LoginDtoRequest reqDto, HttpServletResponse httpRes) {
+        String reqPw = passwordEncoder.encode(reqDto.getPw());
+        User reqUser = userRepository.findByEmail(reqDto.getEmail());
+        System.out.println("요청을 암호화 pw = "+reqPw);
+        System.out.println("디비에 저장된 암호문 pw = "+reqDto.getPw());
+        if(passwordEncoder.matches(reqDto.getPw(),reqPw)){
+            String token = jwtUtil.createToken(reqDto.getEmail(),reqUser);
+            jwtUtil.addJwtToCookie(token, httpRes);
+            return true;
+        }else{
+            return false;
+        }
     }
 }
