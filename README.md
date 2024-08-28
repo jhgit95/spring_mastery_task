@@ -21,10 +21,18 @@
 ---
 
 ## 📝 API 명세서 ( 수정 필요 )
+| Function | Method | URI                 | Request                                                           | Response                                                                                                                       | Status Code                           |
+|----------|--------|---------------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| 회원 가입    | POST   | localhost:8080/users/zz/sign-up          |{"userName": "크리링","email": "크리크리링","regDate": "2024-08-28", "modDate": "2024-08-28","pw": "크리","auth":"nomal"} | {"userId":18,"userName":"크리링","email":"크리크리링","regDate":"2024-08-28","modDate":"2024-08-28","auth":"nomal"} | 200: OK                               |
+| 일정 조회    | GET    | /api/todos/{todoId} | -                                                                 | {"id": 1, "todo": "string", "managerName": "string", "createdAt": "2024-08-10T00:00:00", "updatedAt": "2024-08-10T00:00:00"}   | 200: OK<br>500: Internal Server Error |
+| 일정 목록 조회 | GET    | /api/todos          | ?date=YYYY-MM-DD&managerName=string                               | [{"id": 1, "todo": "string", "managerName": "string", "createdAt": "2024-08-10T00:00:00", "updatedAt": "2024-08-10T00:00:00"}] | 200: OK                               |
+| 일정 수정    | PUT    | /api/todos/{todoId} | {"todo": "string", "managerName": "string", "password": "string"} | {"id": 1, "todo": "string", "managerName": "string", "createdAt": "2024-08-10T00:00:00", "updatedAt": "2024-08-10T00:00:00"}   | 200: OK<br>500: Internal Server Error |
+| 일정 삭제    | DELETE | /api/todos/{todoId} | { "password": "string" }                                          | -                                                                                                                              | 200: OK<br>500: Internal Server Error |
+
 
 #### 일정 등록
 - POST
--  http://localhost:8080/schedules
+-  localhost:8080/users/zz/sign-up
 
 |  Request | Response | 상태 코드 |
 |:---|:---|:---|
