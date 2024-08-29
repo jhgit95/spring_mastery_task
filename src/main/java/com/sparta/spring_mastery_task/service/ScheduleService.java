@@ -13,6 +13,7 @@ import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.repository.AssigneeRepository;
 import com.sparta.spring_mastery_task.repository.ScheduleRepository;
 import com.sparta.spring_mastery_task.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,13 +26,12 @@ import java.util.stream.Collectors;
 
 //@Slf4j
 @Service
+@RequiredArgsConstructor
 public class ScheduleService {
-    @Autowired
-    private ScheduleRepository scheduleRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AssigneeRepository assigneeRepository;
+
+    private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
+    private final AssigneeRepository assigneeRepository;
 
     @Transactional
     // 일정 저장

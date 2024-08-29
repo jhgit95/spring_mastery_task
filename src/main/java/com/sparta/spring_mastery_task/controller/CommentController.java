@@ -3,11 +3,9 @@ package com.sparta.spring_mastery_task.controller;
 import com.sparta.spring_mastery_task.dto.CommentRequestDto;
 import com.sparta.spring_mastery_task.dto.CommentResponseDto;
 import com.sparta.spring_mastery_task.entity.Comment;
-import com.sparta.spring_mastery_task.entity.Schedule;
 import com.sparta.spring_mastery_task.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,10 +13,10 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/comment")
+@RequiredArgsConstructor
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
 
     // 댓글 작성
     @PostMapping

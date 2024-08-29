@@ -3,8 +3,8 @@ package com.sparta.spring_mastery_task.service;
 import com.sparta.spring_mastery_task.dto.CommentRequestDto;
 import com.sparta.spring_mastery_task.entity.Comment;
 import com.sparta.spring_mastery_task.repository.CommentRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +12,9 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CommentService {
-    @Autowired
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
     // 댓글 저장
     public Comment saveComment(Comment comment) {

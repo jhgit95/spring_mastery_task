@@ -4,13 +4,11 @@ import com.sparta.spring_mastery_task.config.PasswordEncoder;
 import com.sparta.spring_mastery_task.dto.loginDto.LoginDtoRequest;
 import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.exception.EmailPwException;
-import com.sparta.spring_mastery_task.exception.TokenMissingException;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.repository.CommentRepository;
 import com.sparta.spring_mastery_task.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +18,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private CommentRepository commentRepository;
+    private final  CommentRepository commentRepository;
 
     private final PasswordEncoder passwordEncoder;
 
