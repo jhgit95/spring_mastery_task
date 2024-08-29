@@ -43,16 +43,22 @@
 | 일정 전체 조회 | GET    |localhost:8080/schedules/all         |{"title":"빨리제출","regDate":"2024-08-22","modDate":"2024-08-29","content":"빨리빨리"} |[{"scheduleId":1,"title":"왜다뒤엎어야하는거야","content":"다시테스트","regDate":"2024-08-22","modDate":"2024-08-22"},{"scheduleId":39,"title":"일정만들기","content":"ㅋㅋ","regDate":"2024-08-29","modDate":"2024-08-29"}]| 200: OK                               |
 | 일정 수정    | PUT    |localhost:8080/schedules/{id} | {"userId":18,"userName":"미친유저초각성","email":"crazy@슈퍼미친유저3.미친놈","regDate":"2024-08-21","modDate":"2024-08-21","auth":"nomal"}| {"scheduleId":37,"title":"빨리제출","content":"빨리빨리","regDate":"2024-08-22","modDate":"2024-08-29","assignees":[{"userId":19,"assigneeId":16,"userName":"크리링","userEmail":"크리크리링"}]} | 200: OK<br>500: Internal Server Error |
 | 일정 삭제    | DELETE | localhost:8080/schedules/{id} | - | "삭제 완료"    | 200: OK<br>500: Internal Server Error |
+| 일정 페이징    | GET |localhost:8080/schedules/schedules?page=3&size=5 | @Params : page, size |{"totalPages":6,"totalElements":27,"size":5,"content":[{"scheduleId":19,"title":"고아만들자","content":"테스트","regDate":"2024-08-24","modDate":"2024-08-24","commentCount":0},{"scheduleId":32,"title":"고아만들자","content":"테스트","regDate":"2024-08-24","modDate":"2024-08-24","commentCount":0}],"number":3,"sort":{"empty":true,"sorted":false,"unsorted":true},"first":false,"last":false,"numberOfElements":5,"pageable":{"pageNumber":3,"pageSize":5,"sort":{"empty":true,"sorted":false,"unsorted":true},"offset":15,"paged":true,"unpaged":false},"empty":false}   | 200: OK<br>500: Internal Server Error |
+
 
 <br></br>
 
-#### 일정 조회
-- GET
--  http://localhost:8080/schedules/{id} 
+#### 댓글
 
-| Request | Response | 상태 코드 |
-|:---|:---|:---|
-| 요청 param | 선택한 일정 |200 ok |
+
+| Function | Method | URI                 | Request                                                           | Response                                                                                                                       | Status Code                           |
+|----------|--------|---------------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| 댓글 작성    | POST   |localhost:8080/comment       |{"user":{"userId":20},"schedule":{"scheduleId":38},"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29"} |{"commentId":32,"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29","userId":20,"scheduleId":38}| 200: OK                               |
+| 댓글 단건 조회    | GET    |localhost:8080/comment/{id} |- |{"commentId":32,"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29","userId":20,"scheduleId":38} | 200: OK<br>500: Internal Server Error |
+| 댓글 전체 조회 | GET    |localhost:8080/comment/all        | -  | [{"commentId":32,"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29","userId":20,"scheduleId":38},{"commentId":33,"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29","userId":20,"scheduleId":38}]| 200: OK                               |
+| 일정 수정    | PUT    |localhost:8080/schedules/{id} | {"userId":18,"userName":"미친유저초각성","email":"crazy@슈퍼미친유저3.미친놈","regDate":"2024-08-21","modDate":"2024-08-21","auth":"nomal"}| {"scheduleId":37,"title":"빨리제출","content":"빨리빨리","regDate":"2024-08-22","modDate":"2024-08-29","assignees":[{"userId":19,"assigneeId":16,"userName":"크리링","userEmail":"크리크리링"}]} | 200: OK<br>500: Internal Server Error |
+| 일정 삭제    | DELETE | localhost:8080/schedules/{id} | - | "삭제 완료"    | 200: OK<br>500: Internal Server Error |
+
 
 <br></br>
 
