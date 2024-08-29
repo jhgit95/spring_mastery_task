@@ -79,7 +79,6 @@
 ## 📋 ERD
 
 
+![mastery_spring (1)](https://github.com/user-attachments/assets/ca0c5a4a-911b-4b3e-9036-648f508fcf44)
 
-
-![mastery_spring_addPw](https://github.com/user-attachments/assets/f61971ac-b0c6-4ca5-bc01-a003490d42c9)
 
