@@ -56,52 +56,13 @@
 | 댓글 작성    | POST   |localhost:8080/comment       |{"user":{"userId":20},"schedule":{"scheduleId":38},"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29"} |{"commentId":32,"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29","userId":20,"scheduleId":38}| 200: OK                               |
 | 댓글 단건 조회    | GET    |localhost:8080/comment/{id} |- |{"commentId":32,"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29","userId":20,"scheduleId":38} | 200: OK<br>500: Internal Server Error |
 | 댓글 전체 조회 | GET    |localhost:8080/comment/all        | -  | [{"commentId":32,"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29","userId":20,"scheduleId":38},{"commentId":33,"content":"댓글테스트","regDate":"2024-08-29","modDate":"2024-08-29","userId":20,"scheduleId":38}]| 200: OK                               |
-| 일정 수정    | PUT    |localhost:8080/schedules/{id} | {"userId":18,"userName":"미친유저초각성","email":"crazy@슈퍼미친유저3.미친놈","regDate":"2024-08-21","modDate":"2024-08-21","auth":"nomal"}| {"scheduleId":37,"title":"빨리제출","content":"빨리빨리","regDate":"2024-08-22","modDate":"2024-08-29","assignees":[{"userId":19,"assigneeId":16,"userName":"크리링","userEmail":"크리크리링"}]} | 200: OK<br>500: Internal Server Error |
-| 일정 삭제    | DELETE | localhost:8080/schedules/{id} | - | "삭제 완료"    | 200: OK<br>500: Internal Server Error |
+| 댓글 수정    | PUT    |localhost:8080/comment | {"commentId":32,"content":"zz이것도수정이되냐"}| {"commentId":32,"content":"zz이것도수정이되냐","regDate":"2024-08-29","modDate":"now:나중에바꿔야함","userId":20,"scheduleId":38} | 200: OK<br>500: Internal Server Error |
+| 댓글 삭제    | DELETE |localhost:8080/comment | {"commentId":14}  | "삭제 완료"    | 200: OK<br>500: Internal Server Error |
 
 
 <br></br>
 
-#### 일정 목록 조회
-- GET
-- http://localhost:8080/schedules/search
 
-| Request | Response | 상태 코드 |
-|:---|:---|:---|
-|요청 body  | 조건에 맞는 일정 | 200 ok |
-
-<br></br>
-
-#### 일정 수정
-- PUT
--  http://localhost:8080/schedules/{id} 
-
- | Request | Response | 상태 코드 |
-|:---|:---|:---|
- |요청 body | 수정된 일정 정보 |200 ok |
- |틀린 pw  | 일치하지 않은 pw |400 bad request |
- |누락된 정보 | 정보 등록 요청 메세지 |400 bad request |
-
-<br></br>
-
-#### 일정 삭제
-- DELETE
--  http://localhost:8080/schedules/{id}
-
-| Request | Response | 상태 코드 |
-|:---|:---|:---|
- |요청 body  | 삭제 결과 |200 ok |
- |틀린 pw  | 일치하지 않은 pw |400 bad request|
-
-<br></br>
-
-#### 페이지네이션
-- GET
-- http://localhost:8080/schedules/pagination 
-
- | Request | Response | 상태 코드 |
-|:---|:---|:---|
- |요청 param  | 페이지네이션 |200 ok |
 
 <br></br>
 ---
