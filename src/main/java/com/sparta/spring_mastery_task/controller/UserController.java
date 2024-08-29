@@ -83,4 +83,22 @@ public class UserController {
 
 
     }
+
+    // 암호화 테스트
+    @GetMapping("/zz/test/{id}")
+    public String testCrypt(@PathVariable String id){
+        System.out.println("id = "+id);
+        System.out.println(passwordEncoder.encode(id));
+
+        System.out.println(passwordEncoder.encode("1"));
+        System.out.println(passwordEncoder.encode("1"));
+        System.out.println(passwordEncoder.encode("1"));
+        System.out.println(passwordEncoder.encode("1"));
+
+
+
+        System.out.println("평문 + 암호문 맞잖아 "+passwordEncoder.matches(id,"$2a$04$HW5GTjJeN0SD44jYEiG3T..RXBR5AjYK4a22n4puzj9xGl9c70NjO"));
+        return passwordEncoder.encode("zz");
+
+    }
 }

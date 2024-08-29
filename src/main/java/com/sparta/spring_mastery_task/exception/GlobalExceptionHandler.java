@@ -14,17 +14,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EmailPwException.class)
-    public ResponseEntity<String> EmailPwException(BadRequestException ex) {
+    public ResponseEntity<String> EmailPwException(EmailPwException ex) {
         return ResponseEntity.status(401).body(ex.getMessage());
     }
 
     @ExceptionHandler(TokenExpireException.class)
-    public ResponseEntity<String> TokenExpireException(BadRequestException ex) {
+    public ResponseEntity<String> TokenExpireException(TokenExpireException ex) {
         return ResponseEntity.status(401).body(ex.getMessage());
     }
 
     @ExceptionHandler(TokenMissingException.class)
-    public ResponseEntity<String> TokenMissingException(BadRequestException ex) {
+    public ResponseEntity<String> TokenMissingException(TokenMissingException ex) {
         return ResponseEntity.status(400).body(ex.getMessage());
     }
 

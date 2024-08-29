@@ -64,11 +64,11 @@ public class UserService {
     // 로그인
     @Transactional
     public boolean login(LoginDtoRequest reqDto, HttpServletResponse httpRes) {
-        String reqPw = passwordEncoder.encode(reqDto.getPw());
+        // 요청 이메일 정보 불러오기
         User reqUser = userRepository.findByEmail(reqDto.getEmail());
-        System.out.println("요청을 암호화 pw = "+reqPw);
-        System.out.println("디비에 저장된 암호문 pw = "+reqDto.getPw());
-        if(passwordEncoder.matches(reqDto.getPw(),reqPw)){
+
+        // 레포에 있는 비밀번호와 요청에 들어온 비밀번호 확인
+        if(passwordEncoder.matches(reqDto.getPw(),reqUser.getPw())){
             String token = jwtUtil.createToken(reqDto.getEmail(),reqUser);
             jwtUtil.addJwtToCookie(token, httpRes);
             return true;
