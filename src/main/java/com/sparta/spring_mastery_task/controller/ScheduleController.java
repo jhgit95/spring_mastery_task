@@ -31,10 +31,7 @@ public class ScheduleController {
     // 담당자 스케쥴 유저 객체 -> id만 받기
     @PostMapping
     public ResponseEntity<ScheduleSaveDtoResponse> createSchedule(@RequestBody ScheduleSaveDtoRequest reqDto) {
-
-
         ScheduleSaveDtoResponse resDto = scheduleService.saveSchedule(reqDto);
-
         return ResponseEntity.ok(resDto);
     }
 

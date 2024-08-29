@@ -18,5 +18,6 @@ public class AssigneeDto {
         this.assigneeId = assignee.getAssigneeId();
         this.userId = assignee.getUser().getUserId();
         this.userName = assignee.getUser().getUserName();
+        this.userEmail=assignee.getUser().getEmail();
     }
 }

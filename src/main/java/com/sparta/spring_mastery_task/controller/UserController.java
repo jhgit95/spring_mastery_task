@@ -25,7 +25,8 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     // 회원 가입
-    // resDto 필요
+    // reqDto 필요
+    // 이메일 유니크 필요
     @PostMapping("/zz/sign-up")
     public ResponseEntity<UserSaveDtoResponse> createUser(@RequestBody User user,  HttpServletResponse httpRes) {
         User savedUser = userService.saveUser(user, httpRes);
@@ -44,10 +45,13 @@ public class UserController {
     }
 
     // 유저 수정
+    // 날짜, 권한, email은 수정될 수 없게 개선 필요
     @PutMapping
     public ResponseEntity<UserSaveDtoResponse> updateUser( @RequestBody User updatedUser) {
+        System.out.println("updateUser.user = "+updatedUser.getUserId());
         User user = userService.updateUser( updatedUser);
 //        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+        System.out.println("user = "+user.getUserId());
         UserSaveDtoResponse resDto = new UserSaveDtoResponse(user);
         return ResponseEntity.ok(resDto);
     }

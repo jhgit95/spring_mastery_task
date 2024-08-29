@@ -86,10 +86,7 @@ public class ScheduleService {
         if (scheduleRepository.existsById(updatedSchedule.getScheduleId()) ) {
             ScheduleUpdateDtoResponse resDto = new ScheduleUpdateDtoResponse(scheduleRepository.save(updatedSchedule));
 
-            System.out.println("뭔데 스케쥴 아이디"+updatedSchedule.getScheduleId());
             resDto.setAssignees(assigneeRepository.findBySchedule_ScheduleId(updatedSchedule.getScheduleId()));
-//            updatedSchedule.setScheduleId(id);
-            System.out.println("뭔데 담당자 "+resDto.getAssignees());
             return resDto;
         }
         return null; // 또는 예외를 던질 수 있습니다.

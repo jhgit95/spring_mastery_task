@@ -65,7 +65,7 @@ public class AuthFilter implements Filter {
 //                        new NullPointerException("Not Found User")
 //                );
 
-                request.setAttribute("user", user); // 이거 없애야 할 수도 있음
+//                request.setAttribute("user", user); // 이거 없애야 할 수도 있음
                 chain.doFilter(request, response); // 다음 Filter 로 이동
             } else {
                 throw new IllegalArgumentException("Not Found Token");

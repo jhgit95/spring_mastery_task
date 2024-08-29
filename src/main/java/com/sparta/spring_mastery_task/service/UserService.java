@@ -46,7 +46,7 @@ public class UserService {
     // 유저 수정
     public User updateUser( User updatedUser) {
         if (userRepository.existsById(updatedUser.getUserId())) {
-            updatedUser.setUserId(updatedUser.getUserId());
+//            updatedUser.setUserId(updatedUser.getUserId());
             return userRepository.save(updatedUser);
         }
         return null; // 또는 예외를 던질 수 있습니다.

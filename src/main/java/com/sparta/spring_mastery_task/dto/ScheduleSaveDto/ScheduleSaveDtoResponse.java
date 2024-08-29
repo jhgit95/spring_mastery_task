@@ -15,8 +15,9 @@ public class ScheduleSaveDtoResponse {
     private String content;
     private String regDate;
     private String modDate;
-    private User user;
+//    private User user;
     private Assignee assignee;
+    private int userId;
 
     public ScheduleSaveDtoResponse(Assignee assignee){
         this.scheduleId=assignee.getSchedule().getScheduleId();
@@ -24,9 +25,9 @@ public class ScheduleSaveDtoResponse {
         this.content=assignee.getSchedule().getContent();
         this.regDate=assignee.getSchedule().getRegDate();
         this.modDate=assignee.getSchedule().getModDate();
-        this.user=assignee.getUser();
-        this.assignee=assignee;
-
+//        this.user=assignee.getUser();
+//        this.assignee=assignee;
+        this.userId=assignee.getUser().getUserId();
     }
 
 }

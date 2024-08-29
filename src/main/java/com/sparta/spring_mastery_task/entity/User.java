@@ -30,6 +30,9 @@ public class User {
     @Column(name = "mod_date")
     private String modDate;
 
+    @Column(name="auth")
+    private String auth;
+
     @Column(name="pw")
     private String pw;
 

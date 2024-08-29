@@ -21,8 +21,6 @@ public class ScheduleUpdateDtoResponse {
     private String regDate;
     private String modDate;
 
-    private int userId;
-
     private List<AssigneeDto> assignees;
 
 

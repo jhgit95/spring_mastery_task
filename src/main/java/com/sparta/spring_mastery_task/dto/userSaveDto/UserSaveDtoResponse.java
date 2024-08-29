@@ -17,12 +17,15 @@ public class UserSaveDtoResponse {
 
     private String modDate;
 
+    private String auth;
+
     public UserSaveDtoResponse(User user){
         this.userId=user.getUserId();
         this.userName=user.getUserName();
         this.email=user.getEmail();
         this.regDate=user.getRegDate();
         this.modDate=user.getModDate();
+        this.auth=user.getAuth();
 
     }
 
