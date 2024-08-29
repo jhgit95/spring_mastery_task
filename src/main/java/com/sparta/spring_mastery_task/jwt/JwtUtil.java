@@ -126,4 +126,18 @@ public class JwtUtil {
         }
         return null;
     }
+
+    // JWT 토큰에서 Claims을 추출하는 메서드
+    private Claims getClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey("${jwt.secret.key}")
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    // JWT 토큰의 만료 여부를 검사하는 메서드
+    public boolean isTokenExpired(String token) {
+        Claims claims = getClaimsFromToken(token); // Claims 객체 추출
+        return claims.getExpiration().before(new Date()); // 만료 여부 확인
+    }
 }

@@ -3,6 +3,8 @@ package com.sparta.spring_mastery_task.service;
 import com.sparta.spring_mastery_task.config.PasswordEncoder;
 import com.sparta.spring_mastery_task.dto.loginDto.LoginDtoRequest;
 import com.sparta.spring_mastery_task.entity.User;
+import com.sparta.spring_mastery_task.exception.EmailPwException;
+import com.sparta.spring_mastery_task.exception.TokenMissingException;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.repository.CommentRepository;
 import com.sparta.spring_mastery_task.repository.UserRepository;
@@ -71,7 +73,7 @@ public class UserService {
             jwtUtil.addJwtToCookie(token, httpRes);
             return true;
         }else{
-            return false;
+            throw new EmailPwException("일치하지 않는 비밀번호");
         }
     }
 }

@@ -3,6 +3,8 @@ package com.sparta.spring_mastery_task.filter;
 
 
 import com.sparta.spring_mastery_task.entity.User;
+import com.sparta.spring_mastery_task.exception.TokenExpireException;
+import com.sparta.spring_mastery_task.exception.TokenMissingException;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.repository.UserRepository;
 import io.jsonwebtoken.Claims;
@@ -54,7 +56,12 @@ public class AuthFilter implements Filter {
 
                 // 토큰 검증
                 if (!jwtUtil.validateToken(token)) {
-                    throw new IllegalArgumentException("Token Error");
+                    throw new TokenMissingException("토큰이 없습니다");
+                }
+
+                // 토큰 만료 확인
+                if (jwtUtil.isTokenExpired(token)) {
+                    throw new TokenExpireException("토큰이 만료되었습니다");
                 }
 
                 // 토큰에서 사용자 정보 가져오기  // 이 부분 볼 것
@@ -68,7 +75,7 @@ public class AuthFilter implements Filter {
 //                request.setAttribute("user", user); // 이거 없애야 할 수도 있음
                 chain.doFilter(request, response); // 다음 Filter 로 이동
             } else {
-                throw new IllegalArgumentException("Not Found Token");
+                throw new TokenMissingException("토큰이 없습니다");
             }
         }
     }
