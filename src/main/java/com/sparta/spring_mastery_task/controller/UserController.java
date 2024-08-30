@@ -5,6 +5,7 @@ import com.sparta.spring_mastery_task.config.PasswordEncoder;
 import com.sparta.spring_mastery_task.dto.loginDto.LoginDtoRequest;
 import com.sparta.spring_mastery_task.dto.userSaveDto.UserSaveDtoResponse;
 import com.sparta.spring_mastery_task.entity.User;
+import com.sparta.spring_mastery_task.exception.BadRequestException;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,10 +35,11 @@ public class UserController {
     // 단건 조회
     @GetMapping("/{id}")
     public ResponseEntity<UserSaveDtoResponse> getUser(@PathVariable int id) {
-//        Optional<User> user = userService.getUserById(id);
-        User user = userService.getUserById(id).orElse(null);
+
+        User user = userService.getUserById(id).orElseThrow(() ->
+                new BadRequestException("존재하지 않는 user_id"));
+
         UserSaveDtoResponse resDto = new UserSaveDtoResponse(user);
-//        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         return ResponseEntity.ok(resDto);
     }
 
@@ -47,7 +49,6 @@ public class UserController {
     public ResponseEntity<UserSaveDtoResponse> updateUser(@RequestBody User updatedUser) {
         System.out.println("updateUser.user = " + updatedUser.getUserId());
         User user = userService.updateUser(updatedUser);
-//        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
         System.out.println("user = " + user.getUserId());
         UserSaveDtoResponse resDto = new UserSaveDtoResponse(user);
         return ResponseEntity.ok(resDto);

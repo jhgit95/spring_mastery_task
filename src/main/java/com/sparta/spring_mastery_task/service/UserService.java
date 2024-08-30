@@ -3,6 +3,7 @@ package com.sparta.spring_mastery_task.service;
 import com.sparta.spring_mastery_task.config.PasswordEncoder;
 import com.sparta.spring_mastery_task.dto.loginDto.LoginDtoRequest;
 import com.sparta.spring_mastery_task.entity.User;
+import com.sparta.spring_mastery_task.exception.BadRequestException;
 import com.sparta.spring_mastery_task.exception.EmailPwException;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.repository.CommentRepository;
@@ -38,6 +39,9 @@ public class UserService {
 
     // 단건 조회
     public Optional<User> getUserById(int id) {
+
+
+
         return userRepository.findById(id);
     }
 
@@ -62,6 +66,12 @@ public class UserService {
     public boolean login(LoginDtoRequest reqDto, HttpServletResponse httpRes) {
         // 요청 이메일 정보 불러오기
         User reqUser = userRepository.findByEmail(reqDto.getEmail());
+
+        // 이메일 존재에 대한 예외 처리
+        System.out.println("user data = " + reqUser);
+        if(reqUser==null){
+            throw new BadRequestException("잘못된 요청 이메일");
+        }
 
         // 레포에 있는 비밀번호와 요청에 들어온 비밀번호 확인
         if(passwordEncoder.matches(reqDto.getPw(),reqUser.getPw())){

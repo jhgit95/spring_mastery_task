@@ -9,7 +9,7 @@ public class GlobalExceptionHandler {
 
     // 요청된 바디가 잘못된 경우
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<String> handleMissingFieldException(BadRequestException ex) {
+    public ResponseEntity<String> BadRequestException(BadRequestException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

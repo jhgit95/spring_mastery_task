@@ -10,6 +10,7 @@ import com.sparta.spring_mastery_task.dto.ScheduleUpdateDto.ScheduleUpdateDtoRes
 import com.sparta.spring_mastery_task.dto.scheduleGetAllDto.ScheduleGetAllDtoResponse;
 import com.sparta.spring_mastery_task.entity.Assignee;
 import com.sparta.spring_mastery_task.entity.Schedule;
+import com.sparta.spring_mastery_task.exception.BadRequestException;
 import com.sparta.spring_mastery_task.repository.AssigneeRepository;
 import com.sparta.spring_mastery_task.repository.ScheduleRepository;
 import com.sparta.spring_mastery_task.repository.UserRepository;
@@ -52,7 +53,8 @@ public class ScheduleService {
 
     // 단건 조회
     public ScheduleGetDtoResponse getScheduleById(int id) {
-        ScheduleGetDtoResponse resDto = new ScheduleGetDtoResponse(scheduleRepository.findById(id).orElse(null));
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 schedule_id"));
+        ScheduleGetDtoResponse resDto = new ScheduleGetDtoResponse(schedule);
 
         // Assignee 목록을 가져옵니다
         List<Assignee> assignees = assigneeRepository.findBySchedule_ScheduleId(id);

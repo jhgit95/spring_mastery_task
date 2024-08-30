@@ -2,6 +2,7 @@ package com.sparta.spring_mastery_task.service;
 
 import com.sparta.spring_mastery_task.dto.CommentRequestDto;
 import com.sparta.spring_mastery_task.entity.Comment;
+import com.sparta.spring_mastery_task.exception.BadRequestException;
 import com.sparta.spring_mastery_task.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,8 @@ public class CommentService {
 
     // 댓글 조회 id
     public Comment getCommentById(int id) {
-        return commentRepository.findById(id).orElse(null);
+        return commentRepository.findById(id).orElseThrow(() ->
+                new BadRequestException("존재하지 않는 comment_id"));
 
     }
 
@@ -38,7 +40,10 @@ public class CommentService {
     // 검증, 예외 처리 필요
     @Transactional
     public Comment updateComment(Comment updateComment) {
-        Comment existingComment = commentRepository.findById(updateComment.getCommentId()).orElse(null);
+
+        Comment existingComment = commentRepository.findById(updateComment.getCommentId())
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 comment_id"));
+
         existingComment.setContent(updateComment.getContent());
         existingComment.setModDate("now : 나중에 바꿔야함");
         return commentRepository.save(existingComment);
