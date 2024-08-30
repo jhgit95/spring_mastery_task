@@ -4,6 +4,7 @@ import com.sparta.spring_mastery_task.config.PasswordEncoder;
 import com.sparta.spring_mastery_task.dto.loginDto.LoginDtoRequest;
 import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.exception.BadRequestException;
+import com.sparta.spring_mastery_task.exception.ConflictException;
 import com.sparta.spring_mastery_task.exception.EmailPwException;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.repository.CommentRepository;
@@ -20,27 +21,31 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
     private final  CommentRepository commentRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final JwtUtil jwtUtil;
 
-    // 유저 저장
+    // 회원 가입
+    @Transactional
     public User saveUser(User user, HttpServletResponse httpRes) {
+
+        // 이메일 중복 검증
+        User duplicateCheck = userRepository.findByEmail(user.getEmail());
+        if(duplicateCheck!=null){
+            throw new ConflictException("중복된 이메일");
+        }
+
+
         String encodePw = passwordEncoder.encode(user.getPw());
         user.setPw(encodePw);
-        String test = jwtUtil.createToken(user.getUserName(),user);
-        System.out.println("test = " + test);
-        jwtUtil.addJwtToCookie(test, httpRes);
+        String token = jwtUtil.createToken(user.getEmail(),user);
+        System.out.println("token = " + token);
+        jwtUtil.addJwtToCookie(token, httpRes);
         return userRepository.save(user);
     }
 
     // 단건 조회
     public Optional<User> getUserById(int id) {
-
-
 
         return userRepository.findById(id);
     }

@@ -28,4 +28,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(400).body(ex.getMessage());
     }
 
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<String> ConflictException(ConflictException ex) {
+        return ResponseEntity.status(409).body(ex.getMessage());
+    }
+
 }

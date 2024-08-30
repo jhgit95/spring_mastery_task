@@ -52,6 +52,7 @@ public class ScheduleService {
     }
 
     // 단건 조회
+    @Transactional
     public ScheduleGetDtoResponse getScheduleById(int id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 schedule_id"));
         ScheduleGetDtoResponse resDto = new ScheduleGetDtoResponse(schedule);
@@ -70,17 +71,13 @@ public class ScheduleService {
                     return dto;
                 })
                 .collect(Collectors.toList());
-// 여기부터 다시 해
 
         resDto.setAssignees(assigneeDtos);
-
         return resDto;
-
-
     }
 
-    @Transactional
     // 일정 수정
+    @Transactional
     public ScheduleUpdateDtoResponse updateSchedule(int id, Schedule updatedSchedule) {
         // 요청받은 스케쥴id, 유저id 존재 확인
         // assignee 추가해서 잠시 주석 처리
@@ -99,16 +96,10 @@ public class ScheduleService {
     public Page<SchedulePagingResponseDto> getSchedules(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-//        Page<Schedule> pageSchedule = scheduleRepository.findAll(pageable);
-//        pageSchedule.map(SchedulePagingResponseDto::)
-//        SchedulePagingResponseDto pagingResponseDto = new SchedulePagingResponseDto();
-//        return scheduleRepository.findAll(pageable);
-
-//        Pageable pageable = PageRequest.of(page, size);
         Page<Schedule> pageSchedule = scheduleRepository.findAll(pageable);
 
         // Schedule을 SchedulePagingResponseDto로 변환
-        Page<SchedulePagingResponseDto> dtoPage = pageSchedule.map(schedule -> new SchedulePagingResponseDto(schedule));
+        Page<SchedulePagingResponseDto> dtoPage = pageSchedule.map(SchedulePagingResponseDto::new);
 
         return dtoPage;
 
@@ -116,6 +107,7 @@ public class ScheduleService {
 
     }
 
+    // 일정 삭제
     @Transactional
     public void deleteSchedule(int id){
         Schedule schedule = scheduleRepository.findById(id)
