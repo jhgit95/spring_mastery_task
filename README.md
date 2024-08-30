@@ -28,8 +28,8 @@
 
 | Function | Method | URI                 | Request                                                           | Response                                                                                                                       | Status Code                           |
 |----------|--------|---------------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
-| 회원 가입    | POST   | localhost:8080/users/zz/sign-up          |{"userName": "크리링","email": "크리크리링","regDate": "2024-08-28", "modDate": "2024-08-28","pw": "크리","auth":"nomal"} | {"userId":18,"userName":"크리링","email":"크리크리링","regDate":"2024-08-28","modDate":"2024-08-28","auth":"nomal"} | 200: OK                               |
-| 로그인    | GET    |localhost:8080/users/zz/login |{"email":"이메일","pw":"비번"} | "로그인 완료"   | 200: OK  |
+| 회원 가입    | POST   | localhost:8080/users/public/sign-up          |{"userName": "크리링","email": "크리크리링","regDate": "2024-08-28", "modDate": "2024-08-28","pw": "크리","auth":"nomal"} | {"userId":18,"userName":"크리링","email":"크리크리링","regDate":"2024-08-28","modDate":"2024-08-28","auth":"nomal"} | 200: OK                               |
+| 로그인    | GET    |localhost:8080/users/public/login |{"email":"이메일","pw":"비번"} | "로그인 완료"   | 200: OK  |
 |사용자 조회 | GET    | localhost:8080/users/{id}         | -  | {"userId":20,"userName":"이름","email":"이메일","regDate":"2024-08-28","modDate":"2024-08-28","auth":"nomal"} | 200: OK                               |
 | 사용자 수정    | PUT    |localhost:8080/users | {"userId":18,"userName":"미친유저초각성","email":"crazy@슈퍼미친유저3.미친놈","regDate":"2024-08-21","modDate":"2024-08-21","auth":"nomal"}| {"userId":18,"userName":"미친유저초각성","email":"crazy@슈퍼미친유저3.미친놈","regDate":"2024-08-21","modDate":"2024-08-21","auth":"nomal"}  | 200: OK  |
 | 사용자 삭제    | DELETE | localhost:8080/users/{id} | - | -    | 200: OK  |
