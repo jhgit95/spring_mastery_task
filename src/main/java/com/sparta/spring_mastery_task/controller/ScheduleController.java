@@ -8,7 +8,10 @@ import com.sparta.spring_mastery_task.dto.ScheduleSaveDto.ScheduleSaveDtoRespons
 import com.sparta.spring_mastery_task.dto.ScheduleUpdateDto.ScheduleUpdateDtoResponse;
 import com.sparta.spring_mastery_task.dto.scheduleGetAllDto.ScheduleGetAllDtoResponse;
 import com.sparta.spring_mastery_task.entity.Schedule;
+import com.sparta.spring_mastery_task.exception.ForbiddenException;
+import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.service.ScheduleService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ import java.util.List;
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
+    private final JwtUtil jwtUtil;
 
     // 일정 저장
     // dto 수정 필요
@@ -45,7 +49,13 @@ public class ScheduleController {
 
     // 일정 수정
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleUpdateDtoResponse> updateSchedule(@PathVariable int id, @RequestBody ScheduleRequestDto reqDto) {
+    public ResponseEntity<ScheduleUpdateDtoResponse> updateSchedule(
+            @PathVariable int id, @RequestBody ScheduleRequestDto reqDto, HttpServletRequest req) {
+        String token = jwtUtil.getTokenFromRequest(req);
+        if(!jwtUtil.getAuthFromToken(token).equals("admin")){
+            throw new ForbiddenException("권한이 없습니다");
+        }
+
         reqDto.setScheduleId(id);
         Schedule schedule = new Schedule(reqDto);
         ScheduleUpdateDtoResponse resDto;
@@ -65,7 +75,13 @@ public class ScheduleController {
 
     // 일정 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSchedule(@PathVariable int id) {
+    public ResponseEntity<String> deleteSchedule(@PathVariable int id,  HttpServletRequest req) {
+        String token = jwtUtil.getTokenFromRequest(req);
+        if(!jwtUtil.getAuthFromToken(token).equals("admin")){
+            throw new ForbiddenException("권한이 없습니다");
+        }
+
+
         scheduleService.deleteSchedule(id);
         return ResponseEntity.ok("삭제 완료");
     }

@@ -33,4 +33,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(409).body(ex.getMessage());
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<String> ForbiddenException(ForbiddenException ex) {
+        return ResponseEntity.status(403).body(ex.getMessage());
+    }
+
 }

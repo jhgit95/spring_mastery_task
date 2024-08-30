@@ -8,6 +8,7 @@ import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.exception.BadRequestException;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
 import com.sparta.spring_mastery_task.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +22,6 @@ public class UserController {
 
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-
-    // 회원 가입
-    // reqDto 필요
-    // 이메일 유니크 필요
-    @PostMapping("/public/sign-up")
-    public ResponseEntity<UserSaveDtoResponse> createUser(@RequestBody User user, HttpServletResponse httpRes) {
-        User savedUser = userService.saveUser(user, httpRes);
-        UserSaveDtoResponse resDto = new UserSaveDtoResponse(savedUser);
-        return ResponseEntity.ok(resDto);
-    }
 
     // 단건 조회
     @GetMapping("/{id}")
@@ -77,13 +68,21 @@ public class UserController {
         } else {
             return ResponseEntity.status(400).body("에러 발생 : 로그인");
         }
+    }
 
-
+    // 회원 가입
+    // reqDto 필요
+    // 이메일 유니크 필요
+    @PostMapping("/public/sign-up")
+    public ResponseEntity<UserSaveDtoResponse> createUser(@RequestBody User user, HttpServletResponse httpRes) {
+        User savedUser = userService.saveUser(user, httpRes);
+        UserSaveDtoResponse resDto = new UserSaveDtoResponse(savedUser);
+        return ResponseEntity.ok(resDto);
     }
 
     // 암호화 테스트
     @GetMapping("/public/test/{id}")
-    public String testCrypt(@PathVariable String id) {
+    public String testCrypt(@PathVariable String id, HttpServletRequest req) {
         System.out.println("id = " + id);
         System.out.println(passwordEncoder.encode(id));
 
@@ -92,6 +91,9 @@ public class UserController {
         System.out.println(passwordEncoder.encode("1"));
         System.out.println(passwordEncoder.encode("1"));
 
+        System.out.println(jwtUtil.getTokenFromRequest(req));
+        String token = jwtUtil.getTokenFromRequest(req);
+        System.out.println(jwtUtil.getAuthFromToken(token));
 
         System.out.println("평문 + 암호문 맞잖아 " + passwordEncoder.matches(id, "$2a$04$HW5GTjJeN0SD44jYEiG3T..RXBR5AjYK4a22n4puzj9xGl9c70NjO"));
         return passwordEncoder.encode("zz");

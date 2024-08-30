@@ -25,25 +25,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    // 회원 가입
-    @Transactional
-    public User saveUser(User user, HttpServletResponse httpRes) {
-
-        // 이메일 중복 검증
-        User duplicateCheck = userRepository.findByEmail(user.getEmail());
-        if(duplicateCheck!=null){
-            throw new ConflictException("중복된 이메일");
-        }
-
-
-        String encodePw = passwordEncoder.encode(user.getPw());
-        user.setPw(encodePw);
-        String token = jwtUtil.createToken(user.getEmail(),user);
-        System.out.println("token = " + token);
-        jwtUtil.addJwtToCookie(token, httpRes);
-        return userRepository.save(user);
-    }
-
     // 단건 조회
     public Optional<User> getUserById(int id) {
 
@@ -80,11 +61,29 @@ public class UserService {
 
         // 레포에 있는 비밀번호와 요청에 들어온 비밀번호 확인
         if(passwordEncoder.matches(reqDto.getPw(),reqUser.getPw())){
-            String token = jwtUtil.createToken(reqDto.getEmail(),reqUser);
+            String token = jwtUtil.createToken(reqUser);
             jwtUtil.addJwtToCookie(token, httpRes);
             return true;
         }else{
             throw new EmailPwException("일치하지 않는 비밀번호");
         }
+    }
+    // 회원 가입
+    @Transactional
+    public User saveUser(User user, HttpServletResponse httpRes) {
+
+        // 이메일 중복 검증
+        User duplicateCheck = userRepository.findByEmail(user.getEmail());
+        if(duplicateCheck!=null){
+            throw new ConflictException("중복된 이메일");
+        }
+
+
+        String encodePw = passwordEncoder.encode(user.getPw());
+        user.setPw(encodePw);
+        String token = jwtUtil.createToken(user);
+        System.out.println("token = " + token);
+        jwtUtil.addJwtToCookie(token, httpRes);
+        return userRepository.save(user);
     }
 }
