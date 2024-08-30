@@ -1,7 +1,6 @@
 package com.sparta.spring_mastery_task.filter;
 
 
-
 import com.sparta.spring_mastery_task.entity.User;
 import com.sparta.spring_mastery_task.exception.TokenExpireException;
 import com.sparta.spring_mastery_task.exception.TokenMissingException;
@@ -10,6 +9,7 @@ import com.sparta.spring_mastery_task.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -34,6 +34,7 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         System.out.println("필터 되냐");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         String url = httpServletRequest.getRequestURI();
 
         // 여기 넣는 url은 토큰 검증을 하지 않음
@@ -53,16 +54,25 @@ public class AuthFilter implements Filter {
             if (StringUtils.hasText(tokenValue)) { // 토큰이 존재하면 검증 시작
                 // JWT 토큰 substring
                 String token = jwtUtil.substringToken(tokenValue);
+                try {
 
-                // 토큰 검증
-                if (!jwtUtil.validateToken(token)) {
-                    throw new TokenMissingException("토큰이 없습니다");
+                    // 토큰 검증
+                    if (jwtUtil.validateToken(token)) {
+                        System.out.println("토큰 검증 jwtUtil.validateToken(token) 완료 ");
+                        chain.doFilter(request, response); // 다음 Filter 로 이동.
+                    } else {
+                        System.out.println("토큰 검증 jwtUtil.validateToken(token) 실패 ");
+                        httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효하지 않은 JWT");
+                        return;
+                    }
+                } catch (Exception e) {
+
+                    log.error("예외 발생: ", e);
+                    System.out.println("토큰 검증 jwtUtil.validateToken(token) 실패 ");
+                    httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효하지 않은 JWT");
+                    return;
                 }
 
-                // 토큰 만료 확인
-                if (jwtUtil.isTokenExpired(token)) {
-                    throw new TokenExpireException("토큰이 만료되었습니다");
-                }
 
                 // 토큰에서 사용자 정보 가져오기  // 이 부분 볼 것
                 Claims info = jwtUtil.getUserInfoFromToken(token);
@@ -73,9 +83,11 @@ public class AuthFilter implements Filter {
 //                );
 
 //                request.setAttribute("user", user); // 이거 없애야 할 수도 있음
-                chain.doFilter(request, response); // 다음 Filter 로 이동
+
             } else {
-                throw new TokenMissingException("토큰이 없습니다");
+                System.out.println("토큰이 없어");
+                httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "JWT가 없음");
+                return;
             }
         }
     }
