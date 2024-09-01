@@ -47,22 +47,7 @@ public class ScheduleController {
 
     }
 
-    // 일정 수정
-    @PutMapping("/{id}")
-    public ResponseEntity<ScheduleUpdateDtoResponse> updateSchedule(
-            @PathVariable int id, @RequestBody ScheduleRequestDto reqDto, HttpServletRequest req) {
-        String token = jwtUtil.getTokenFromRequest(req);
-        if(!jwtUtil.getAuthFromToken(token).equals("admin")){
-            throw new ForbiddenException("권한이 없습니다");
-        }
 
-        reqDto.setScheduleId(id);
-        Schedule schedule = new Schedule(reqDto);
-        ScheduleUpdateDtoResponse resDto;
-        resDto = scheduleService.updateSchedule(id, schedule);
-//        return resDto != null ? ResponseEntity.ok(schedule) : ResponseEntity.notFound().build();
-        return ResponseEntity.ok(resDto);
-    }
 
     //    // 페이징
     @GetMapping("/schedules")
@@ -73,15 +58,29 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.getSchedules(page, size));
     }
 
+    // 일정 수정
+    @PutMapping("/auth/{id}")
+    public ResponseEntity<ScheduleUpdateDtoResponse> updateSchedule(
+            @PathVariable int id, @RequestBody ScheduleRequestDto reqDto, HttpServletRequest req) {
+//        String token = jwtUtil.getTokenFromRequest(req);
+//        if(!jwtUtil.getAuthFromToken(token).equals("admin")){
+//            throw new ForbiddenException("권한이 없습니다");
+//        }
+        reqDto.setScheduleId(id);
+        Schedule schedule = new Schedule(reqDto);
+        ScheduleUpdateDtoResponse resDto;
+        resDto = scheduleService.updateSchedule(id, schedule);
+//        return resDto != null ? ResponseEntity.ok(schedule) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(resDto);
+    }
+
     // 일정 삭제
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/auth/{id}")
     public ResponseEntity<String> deleteSchedule(@PathVariable int id,  HttpServletRequest req) {
-        String token = jwtUtil.getTokenFromRequest(req);
-        if(!jwtUtil.getAuthFromToken(token).equals("admin")){
-            throw new ForbiddenException("권한이 없습니다");
-        }
-
-
+//        String token = jwtUtil.getTokenFromRequest(req);
+//        if(!jwtUtil.getAuthFromToken(token).equals("admin")){
+//            throw new ForbiddenException("권한이 없습니다");
+//        }
         scheduleService.deleteSchedule(id);
         return ResponseEntity.ok("삭제 완료");
     }

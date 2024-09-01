@@ -2,6 +2,7 @@ package com.sparta.spring_mastery_task.filter;
 
 
 import com.sparta.spring_mastery_task.entity.User;
+import com.sparta.spring_mastery_task.exception.ForbiddenException;
 import com.sparta.spring_mastery_task.exception.TokenExpireException;
 import com.sparta.spring_mastery_task.exception.TokenMissingException;
 import com.sparta.spring_mastery_task.jwt.JwtUtil;
@@ -50,6 +51,20 @@ public class AuthFilter implements Filter {
             // 나머지 API 요청은 인증 처리 진행
             // 토큰 확인
             String tokenValue = jwtUtil.getTokenFromRequest(httpServletRequest);
+
+
+            // admin 권한이 필요한 요청의 경우
+            if (StringUtils.hasText(url) && url.startsWith("/schedules/auth")) {
+                System.out.println("필터 완료~~~~완료~~~~~");
+
+                String authCheckToken = jwtUtil.getTokenFromRequest(httpServletRequest);
+                if (!jwtUtil.getAuthFromToken(authCheckToken).equals("admin")) {
+                    System.out.println("토큰 검증 jwtUtil.validateToken(token) 실패 ");
+                    httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "권한 없음");
+                    return;
+                }
+            }
+
 
             if (StringUtils.hasText(tokenValue)) { // 토큰이 존재하면 검증 시작
                 // JWT 토큰 substring

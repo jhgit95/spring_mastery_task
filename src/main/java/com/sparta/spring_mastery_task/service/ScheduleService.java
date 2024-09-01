@@ -57,8 +57,13 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 schedule_id"));
         ScheduleGetDtoResponse resDto = new ScheduleGetDtoResponse(schedule);
 
+        System.out.println("전");
         // Assignee 목록을 가져옵니다
-        List<Assignee> assignees = assigneeRepository.findBySchedule_ScheduleId(id);
+        List<Assignee> assignees = schedule.getAssignee(); // 원래 여기서 지연 로딩 걸어서 이 부분에서 쿼리가 실행되면서
+        // 가지고 와야하는데 쿼리문이 안 날아가고 있어서, 이유를 찾아야 함
+
+        System.out.println("후");
+
 
         // AssigneeDto 리스트를 생성합니다
         List<AssigneeDto> assigneeDtos = assignees.stream()
