@@ -32,6 +32,9 @@ public class Schedule {
     @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comment = new ArrayList<>();
 
+    @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Likes> likes = new ArrayList<>();
+
 
     @Column(name = "title")
     private String title;

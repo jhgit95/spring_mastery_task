@@ -41,7 +41,7 @@ public class AuthFilter implements Filter {
         // 여기 넣는 url은 토큰 검증을 하지 않음
         if (StringUtils.hasText(url) &&
 //                (url.startsWith("/schedules22") || url.startsWith("/users") || url.startsWith("/comment"))
-                url.startsWith("/users/public")
+                (url.startsWith("/users/public")||url.startsWith("/likes")||url.startsWith("/likes/"))
         ) {
             System.out.println("첫 if문");
             // 회원가입, 로그인 관련 API 는 인증 필요없이 요청 진행
