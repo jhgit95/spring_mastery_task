@@ -74,6 +74,12 @@
 | 담당자 추가    | POST |localhost:8080/assignee |{"user":{"userId":20},"schedule":{"scheduleId":38}}  | {"assigneeId":19,"user":{"userId":20,"userName":null,"email":null,"regDate":null,"modDate":null,"auth":null,"pw":null,"assignee":[]},"schedule":{"scheduleId":38,"assignee":[],"comment":[],"title":null,"content":null,"regDate":null,"modDate":null}}   | 200: OK  |
 
 
+### 좋아요
+
+| Function | Method | URI                 | Request                                                           | Response                                                                                                                       | Status Code                           |
+|----------|--------|---------------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| 좋아요    | POST   | localhost:8080/users/public/sign-up          | |  | 200: OK                               |
+
 
 <br></br>
 ---
